@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Financiamento - IZI Imóveis</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+<body>
+
+    <div class="calculadora-container">
+
+        <img src="https://cdn1.valuegaia.com.br/gaiasite/69877/TEMA.LOGOTIPO_SITE/b084481766de0b49224691c3ad6bdce7-logo-png.png" 
+             alt="Logo IZI Imóveis" 
+             class="logo-izi">
+        
+        <h1>Calculadora de Financiamento</h1>
+        <p>Planeje seu futuro e descubra quanto pode economizar.</p>
+
+        <div class="tabs-nav" id="tabs-nav">
+            <button class="tab-link active-tab" data-tab="aba-imovel">
+                Simular por Imóvel
+            </button>
+            <button class="tab-link" data-tab="aba-renda">
+                Simular por Renda
+            </button>
+        </div>
+
+        <div id="aba-imovel" class="tab-content active-content">
+            <form id="calc-form">
+                <div class="input-group">
+                    <label for="valor-imovel">Valor do Imóvel (R$)</label>
+                    <input type="text" id="valor-imovel" inputmode="numeric" placeholder="Ex: R$ 300.000,00" required>
+                </div>
+                <div class="input-group">
+                    <label for="valor-entrada">Valor da Entrada (R$)</label>
+                    <input type="text" id="valor-entrada" inputmode="numeric" placeholder="Ex: R$ 60.000,00" required>
+                </div>
+                
+                <div class="input-group destaque-extra">
+                    <label for="valor-extra">Amortização Extra Mensal (Opcional)</label>
+                    <input type="text" id="valor-extra" inputmode="numeric" placeholder="Quanto você pode pagar a mais por mês?">
+                    <small style="color: #666; display: block; margin-top: 5px;">*Este valor será usado para abater a dívida e reduzir o prazo.</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="taxa-juros">Taxa de Juros (ao ano %)</label>
+                    <input type="number" id="taxa-juros" step="0.01" placeholder="Ex: 9.5" required>
+                </div>
+                <div class="input-group">
+                    <label for="prazo-anos">Prazo do Financiamento (em anos)</label>
+                    <input type="number" id="prazo-anos" placeholder="Ex: 30" required>
+                </div>
+                <div class="input-group">
+                    <label for="tipo-amortizacao">Sistema de Amortização</label>
+                    <select id="tipo-amortizacao">
+                        <option value="price">Tabela Price (Parcelas Fixas)</option>
+                        <option value="sac">Tabela SAC (Parcelas Decrescentes)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-calcular">Calcular Simulação</button>
+            </form>
+        </div> 
+
+        <div id="aba-renda" class="tab-content">
+            <form id="calc-form-renda">
+                <div class="input-group">
+                    <label for="renda-mensal">Renda Mensal Bruta (R$)</label>
+                    <input type="text" id="renda-mensal" inputmode="numeric" placeholder="Ex: R$ 6.000,00" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="percentual-renda">Comprometimento máximo da renda (%)</label>
+                    <input type="number" id="percentual-renda" value="30" step="1" placeholder="Ex: 30" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="taxa-juros-renda">Taxa de Juros (ao ano %)</label>
+                    <input type="number" id="taxa-juros-renda" step="0.01" placeholder="Ex: 9.5" required>
+                </div>
+                <div class="input-group">
+                    <label for="prazo-anos-renda">Prazo do Financiamento (em anos)</label>
+                    <input type="number" id="prazo-anos-renda" placeholder="Ex: 30" required>
+                </div>
+                <div class="input-group">
+                    <label for="tipo-amortizacao-renda">Sistema de Amortização</label>
+                    <select id="tipo-amortizacao-renda">
+                        <option value="price">Tabela Price</option>
+                        <option value="sac">Tabela SAC</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-calcular">Descobrir Potencial</button>
+            </form>
+        </div> 
+
+        <div id="resultado-container">
+        </div>
+
+    </div>
+
+<div id="modal-lead" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <div class="modal-header">
+                <h2>Quase lá! 🚀</h2>
+                <p>Preencha seus dados para visualizar o relatório completo da sua simulação.</p>
+            </div>
+
+            <form id="form-lead">
+                <div class="input-group">
+                    <label for="lead-nome">Nome Completo</label>
+                    <input type="text" id="lead-nome" placeholder="Seu nome" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="lead-email">E-mail</label>
+                    <input type="email" id="lead-email" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="lead-telefone">Telefone / WhatsApp</label>
+                    <input type="tel" id="lead-telefone" placeholder="(00) 00000-0000" maxlength="15" required>
+                </div>
+
+                <div style="margin-bottom: 20px; font-size: 0.85em; color: #666; display: flex; align-items: flex-start; gap: 8px;">
+                    <input type="checkbox" id="lead-consentimento" required style="width: auto; margin-top: 3px;">
+                    <label for="lead-consentimento" style="display: inline; font-weight: normal; margin: 0;">
+                        Concordo em receber o resultado da simulação e contato da IZI Imóveis.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-calcular" style="background-color: #28a745;">Ver Meu Resultado Agora</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

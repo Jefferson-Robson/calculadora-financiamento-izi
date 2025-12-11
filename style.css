@@ -1,0 +1,238 @@
+/* Configurações globais da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.calculadora-container {
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.logo-izi {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+p {
+    text-align: center;
+    color: #5a7184;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+/* Destaque suave para o campo de amortização extra */
+.destaque-extra {
+    background-color: #f0fdf4; /* Fundo verde muito claro */
+    padding: 10px;
+    border: 1px dashed #28a745;
+    border-radius: 5px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    color: #34495e;
+    margin-bottom: 8px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.btn-calcular {
+    width: 100%;
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-calcular:hover {
+    background-color: #0056b3;
+}
+
+#resultado-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+}
+
+#resultado-container .erro {
+    color: #e74c3c;
+    font-weight: bold;
+    text-align: center;
+    background-color: #fdd;
+    border: 1px solid #e74c3c;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+/* ============================================= */
+/* NOVO: CARD DE ECONOMIA (Highlight)            */
+/* ============================================= */
+.economia-box {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.economia-titulo {
+    font-weight: bold;
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* ============================================= */
+/* ESTILOS DAS ABAS (TABS)          */
+/* ============================================= */
+
+.tabs-nav {
+    display: flex;
+    border-bottom: 2px solid #ecf0f1;
+    margin-bottom: 25px;
+}
+
+.tab-link {
+    flex: 1;
+    padding: 15px 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #5a7184;
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px; 
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-link:not(.active-tab):hover {
+    color: #2c3e50;
+    background-color: #f9f9f9;
+}
+
+.tab-link.active-tab {
+    color: #007bff;
+    border-bottom: 3px solid #007bff;
+}
+
+.tab-content { display: none; }
+.tab-content.active-content { display: block; }
+
+.grafico-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 30px auto 10px auto;
+    position: relative;
+}
+
+/* ============================================= */
+/* ESTILOS DO MODAL (POP-UP)                    */
+/* ============================================= */
+
+/* Fundo escuro que cobre a tela toda */
+.modal-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed; 
+    z-index: 1000; /* Fica em cima de tudo */
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.6); /* Preto com transparência */
+    backdrop-filter: blur(3px); /* Efeito de desfoque moderno no fundo */
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+/* A caixa branca do modal */
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: slideUp 0.3s ease;
+}
+
+/* Botão de fechar (X) */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal:hover {
+    color: #000;
+}
+
+.modal-header h2 {
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+/* Animações simples */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Classe utilitária para mostrar o modal (usada pelo JS) */
+.mostrar-modal {
+    display: flex !important;
+}
