@@ -4,12 +4,20 @@
 
 let myChart = null;
 
-// Controle de Lead
-let leadCapturado = false; 
+// Controle de Lead (ATUALIZADO COM LOCALSTORAGE)
+// O sistema verifica se já existe o registro 'izi_lead_ok' no navegador do usuário.
+// Se existir, ele já começa como TRUE (liberado). Se não, começa FALSE (bloqueado).
+let leadCapturado = localStorage.getItem('izi_lead_ok') === 'true';
+
 let ultimaTentativaSubmit = null; 
 
 document.addEventListener('DOMContentLoaded', function() {
     
+    // Se o lead já foi capturado anteriormente, podemos (opcionalmente) avisar no console
+    if (leadCapturado) {
+        console.log("Bem-vindo de volta! Acesso liberado via LocalStorage.");
+    }
+
     const tabsNav = document.getElementById('tabs-nav');
     const tabsContent = document.querySelectorAll('.tab-content');
     const tabLinks = document.querySelectorAll('.tab-link');
@@ -44,35 +52,29 @@ function configurarModalLead() {
     const spanClose = document.querySelector('.close-modal');
     const formLead = document.getElementById('form-lead');
     const inputTelefone = document.getElementById('lead-telefone');
-    const btnSubmit = formLead.querySelector('button[type="submit"]'); // Botão de enviar
+    const btnSubmit = formLead.querySelector('button[type="submit"]');
 
-    // Fechar modal
     spanClose.onclick = () => modal.classList.remove('mostrar-modal');
     window.onclick = (event) => {
         if (event.target == modal) modal.classList.remove('mostrar-modal');
     };
 
-    // Máscara de Telefone
     inputTelefone.addEventListener('input', (e) => {
         let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
         e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
     });
 
-    // --- AQUI ESTÁ A MÁGICA DA INTEGRAÇÃO (CORRIGIDA) ---
     formLead.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // 1. Feedback visual (Muda texto do botão para o usuário saber que algo está acontecendo)
         const textoOriginal = btnSubmit.innerText;
         btnSubmit.innerText = "Enviando... 🚀";
         btnSubmit.disabled = true;
 
-        // 2. Capturar dados
         const nome = document.getElementById('lead-nome').value;
         const email = document.getElementById('lead-email').value;
         const telefone = document.getElementById('lead-telefone').value;
 
-        // Preparar objeto para o SheetMonkey (As chaves devem ser iguais ao cabeçalho da planilha)
         const dadosParaPlanilha = {
             'Nome': nome,
             'Email': email,
@@ -80,27 +82,20 @@ function configurarModalLead() {
             'Data': new Date().toLocaleString('pt-BR')
         };
 
-        // 3. Enviar para PLANILHA (SheetMonkey)
         const urlSheetMonkey = "https://api.sheetmonkey.io/form/eMvHQotQoBvTkRNScSMEyw"; 
 
         try {
-            // Envia os dados diretamente
             await fetch(urlSheetMonkey, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dadosParaPlanilha),
             });
             console.log("Lead salvo na planilha com sucesso!");
-
         } catch (erro) {
             console.error("Erro ao salvar na planilha:", erro);
         }
 
-        // 4. Enviar para WHATSAPP
-        // Limpa o telefone para ficar só números (Ex: 41999999999)
         const telefoneLimpo = telefone.replace(/\D/g, ''); 
-        
-        // Número configurado pelo usuário
         const numeroCorretor = "5511953424035"; 
 
         const mensagemZap = `Olá! Meu nome é ${nome}. Acabei de fazer uma simulação na Calculadora IZI.
@@ -110,18 +105,19 @@ Gostaria de ver detalhes sobre esse financiamento.`;
 
         const linkZap = `https://wa.me/${numeroCorretor}?text=${encodeURIComponent(mensagemZap)}`;
         
-        // Abre o WhatsApp numa nova aba
         window.open(linkZap, '_blank');
 
-        // 5. Finalizar processo no site
+        // --- ATUALIZAÇÃO IMPORTANTE ---
+        // 1. Marca na memória RAM (variável)
         leadCapturado = true;
+        // 2. Marca na memória do NAVEGADOR (LocalStorage) para o futuro
+        localStorage.setItem('izi_lead_ok', 'true');
+
         modal.classList.remove('mostrar-modal');
         
-        // Restaura o botão
         btnSubmit.innerText = textoOriginal;
         btnSubmit.disabled = false;
 
-        // Libera o cálculo que estava travado
         if (ultimaTentativaSubmit === 'imovel') {
             document.getElementById('calc-form').dispatchEvent(new Event('submit'));
         } else if (ultimaTentativaSubmit === 'renda') {
