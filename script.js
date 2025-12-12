@@ -96,7 +96,7 @@ function configurarModalLead() {
         }
 
         const telefoneLimpo = telefone.replace(/\D/g, ''); 
-        const numeroCorretor = "5511953424035"; 
+        const numeroCorretor = "5541996291417"; 
 
         const mensagemZap = `Olá! Meu nome é ${nome}. Acabei de fazer uma simulação na Calculadora IZI.
 Meu telefone é: ${telefone}
